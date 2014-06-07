@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/Board.qml</file>
+        <file>qml/Cell.qml</file>
+        <file>qml/CustomBtn.qml</file>
+        <file>qml/GameOverWnd.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/OptionsWnd.qml</file>
+        <file>qml/ScoreBoard.qml</file>
+        <file>qml/logic.js</file>
+    </qresource>
+</RCC>
