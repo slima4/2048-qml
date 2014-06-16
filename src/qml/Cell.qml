@@ -7,8 +7,8 @@ Rectangle {
 
     property alias value: lable.text;
     property size size: Qt.size(20,20);
-    property bool animMove: false;
-    property bool animSize: false
+    property bool animMoveEnable: false;
+    property bool animResizeEnable: false
 
     width: parent.width / Logic.columns;
     height: parent.height / Logic.rows;
@@ -35,42 +35,30 @@ Rectangle {
         }
 
         Behavior on width {
-            enabled: animSize;
+            enabled: animResizeEnable;
             NumberAnimation {
                 duration: 100;
             }
         }
 
         Behavior on height {
-            enabled: animSize;
+            enabled: animResizeEnable;
             NumberAnimation {
                 duration: 100;
             }
         }
     }
     Behavior on x {
-        enabled: animMove;
+        enabled: animMoveEnable;
         NumberAnimation {
-            id: animX
             duration: 100;
-            onRunningChanged: {
-                if (!animX.running) {
-                    Logic.onAnimEnd();
-                }
-            }
         }
     }
 
     Behavior on y {
-        enabled: animMove;
+        enabled: animMoveEnable;
         NumberAnimation {
-            id: animY
             duration: 100;
-            onRunningChanged: {
-                if (!animY.running) {
-                    Logic.onAnimEnd();
-                }
-            }
         }
     }
 }

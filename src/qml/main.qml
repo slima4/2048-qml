@@ -47,10 +47,20 @@ ApplicationWindow {
         id: board
     }
 
+    Timer {
+        id: movingTimer
+        interval: 100; running: false;
+        onTriggered: {
+            Logic.onAnimEnd();
+        }
+    }
+
     Rectangle{
         focus: true
         Keys.onPressed: {
-            Logic.move(event.key);
+            if(Logic.move(event.key)) {
+                movingTimer.start();
+            }
             event.accepted = true;
         }
     }

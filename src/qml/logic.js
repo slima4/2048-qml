@@ -6,14 +6,12 @@ var rows = 4;
 var arrGrid = [];
 var arrCells = [];
 var baseObj = null;
-var moveCount = 0;
 var moving = false;
 
 var colors = { "": "white", "2":"#eee4da", "4":"#ece0c8", "8":"#f2b179", "16":"#f59563", "32":"#f57c5f", "64":"#f95c3b",
                 "128":"#edce71", "256":"#eecc61", "512":"#ebc850", "1024":"#edc53f" }//, "2048":"#eec22e", "4096":"#3d3a33", "8192":"#3d3a33", "16384":"#3d3a33" }
 
 var fontSize = { 0:1, 1:45, 2:40, 3:35, 4:30 }
-
 function init(col, row, parent)
 {
     columns = col;
@@ -129,7 +127,7 @@ function moveObj(row, col, row2, col2) {
     if ((cell1 !== 0 && cell2 !== 0) && cell1 !== cell2)
         return false;
 
-    arrCells[row][col].animMove = true;
+    arrCells[row][col].animMoveEnable = true;
 
     if ( (cell1 !== 0 && cell1 === cell2) ||
          (cell1 !== 0 && cell2 === 0) )
@@ -138,7 +136,6 @@ function moveObj(row, col, row2, col2) {
         arrCells[row][col].x = arrCells[row][col].width * col2;
         arrCells[row][col].y = arrCells[row][col].height * row2;
         moving = true;
-        ++moveCount;
     }
 
     if (cell1 !== 0 && cell1 === cell2) {
@@ -156,10 +153,6 @@ function moveObj(row, col, row2, col2) {
 
 function onAnimEnd()
 {
-    --moveCount;
-    if (moveCount != 0)
-        return;
-
     cleanCells();
 
     for (var i = 0; i < rows; ++i) {
@@ -175,7 +168,7 @@ function onAnimEnd()
 function move(direction)
 {
     if(moving)
-        return;
+        return !moving;
 
     if (direction === Qt.Key_Left || direction=== Qt.Key_Up) {
         for (var i = 0; i < rows; ++i) {
@@ -208,6 +201,7 @@ function move(direction)
             }
         }
     }
+    return moving;
 }
 
 function create(row, col, value, respaun)
@@ -216,7 +210,7 @@ function create(row, col, value, respaun)
     var object = component.createObject(baseObj.board);
 
     object.value = value;
-    object.animSize = respaun;
+    object.animResizeEnable = respaun;
     object.x = object.width * col;
     object.y = object.height * row;
     object.size = Qt.size(baseObj.board.width / rows - 10, baseObj.board.height / columns - 10);
